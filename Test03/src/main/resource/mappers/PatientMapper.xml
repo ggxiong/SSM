@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blb.ssm.mapper.PatientMapper">
+
+    <!-- Integer getNum(String province,String type);-->
+
+    <resultMap id="patient" type="com.blb.ssm.entity.Patient">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="age" property="age"/>
+        <result column="type" property="type"/>
+        <result column="symptom" property="symptom"/>
+        <result column="pid" property="pid"/>
+        <association property="address" javaType="com.blb.ssm.entity.Address">
+            <id column="id" property="id"/>
+            <result column="province" property="province"/>
+            <result column="city" property="city"/>
+            <result column="county" property="county"/>
+            <result column="hospital" property="hospital"/>
+        </association>
+    </resultMap>
+
+
+    <!-- Integer getNum(String type,String province);-->
+    <select id="getNum" resultType="java.lang.Integer">
+
+        select  count(*) type  from t_address a ,t_patient p where a.id =p.pid and
+         p.type =#{param1} and a.province=#{param2}
+
+    </select>
+
+    <select id="getPatientByProvince" resultMap="patient">
+
+        select  *  from t_address a ,t_patient p where a.id =p.pid  and a.province=#{param1}
+
+    </select>
+
+    <!-- List<Patient> getPatientByProvince(String provinceName);-->
+    <select id="getPatientByCity" resultMap="patient">
+
+        select  *  from t_address a ,t_patient p where a.id =p.pid  and a.city=#{param1}
+
+    </select>
+
+    <select id="getPatientByCounty" resultMap="patient">
+
+        select  *  from t_address a ,t_patient p where a.id =p.pid  and a.county=#{param1}
+
+    </select>
+
+    <select id="getPatientByHospital" resultMap="patient">
+
+        select  *  from t_address a ,t_patient p where a.id =p.pid  and a.hospital=#{param1}
+
+    </select>
+
+
+
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blb.ssm.mapper.MenuMapper">
+
+    <resultMap id="TreeMenu" type="com.blb.ssm.entity.Menu">
+        <id property="id" column="id"/>
+        <result column="pid" property="pid"/>
+        <result column="menu_name" property="menuName"/>
+        <result column="permission" property="permission"/>
+        <result column="icon" property="icon"/>
+        <result column="url" property="url"/>
+        <collection property="children" select="getTreeMenu" column="id">
+
+        </collection>
+    </resultMap>
+    
+    <select id="getTreeMenu" resultMap="TreeMenu">
+
+        select * from t_menu where pid =#{id}
+
+    </select>
+
+    <resultMap id="TreeMenu1" type="menu">
+        <id property="id" column="id"/>
+        <result property="pid" column="pid"/>
+        <result property="menuName" column="menu_name"/>
+        <result property="permission" column="permission"/>
+        <result property="type" column="type"/>
+        <result property="icon" column="icon"/>
+        <result property="url" column="url"/>
+        <collection property="children"  select="getMenuByUserName" column="{id=id, username=username}">
+        </collection>
+    </resultMap>
+
+    <select id="getTreeMenu" resultMap="TreeMenu">
+        select * from t_menu where pid = #{id}
+    </select>
+
+    <select id="getMenuByUserName" resultMap="TreeMenu1">
+        SELECT distinct m.*, u.username FROM t_menu m
+        LEFT JOIN t_role_menu rm ON rm.menu_id = m.id
+        LEFT JOIN t_role r ON r.id = rm.role_id
+        LEFT JOIN t_user_role ur ON ur.role_id = r.id
+        LEFT JOIN t_user u ON u.id = ur.user_id
+        WHERE u.username = #{username}  AND m.pid = #{id}
+    </select>
+
+
+
+
+
+
+</mapper>

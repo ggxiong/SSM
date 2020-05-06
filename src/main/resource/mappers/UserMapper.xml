@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blb.ssm.mapper.UserMapper">
+    <select id="getRoles" resultType="string">
+        SELECT r.name FROM t_role r
+        LEFT JOIN t_user_role ur ON r.role_id = ur.role_id
+        LEFT JOIN t_user u ON u.user_id = ur.user_id
+        WHERE u.user_name = #{username}
+    </select>
+
+    <select id="getPermision" resultType="string">
+        SELECT code FROM t_permission p
+        LEFT JOIN t_role_permission rp ON p.permission_id = rp.permission_id
+        LEFT JOIN t_role r ON r.role_id = rp.role_id
+        WHERE r.name IN
+        <foreach collection="collection" item="role" open="(" close=")" separator=",">
+            #{role}
+        </foreach>
+    </select>
+</mapper>

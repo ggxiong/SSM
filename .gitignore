@@ -1,0 +1,4 @@
+# Project exclude paths
+/SSM02/target/
+/target/
+/Test03/target/

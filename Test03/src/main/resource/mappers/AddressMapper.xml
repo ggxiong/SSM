@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blb.ssm.mapper.AddressMapper">
+
+
+    <!-- List<String> getProvince();-->
+    <select id="getProvince" resultType="java.lang.String">
+
+        select distinct  province from t_address
+
+    </select>
+
+
+    <!--
+       List<String> getCity();
+
+       List<String> getCounty();
+
+       List<String> getHospital();
+
+    -->
+    <select id="getCity" resultType="java.lang.String">
+
+        select distinct  city from t_address
+
+    </select>
+
+    <select id="getCounty" resultType="java.lang.String">
+
+        select distinct  county from t_address
+
+    </select>
+
+    <select id="getHospital" resultType="java.lang.String">
+
+        select distinct  hospital from t_address
+
+    </select>
+
+
+</mapper>

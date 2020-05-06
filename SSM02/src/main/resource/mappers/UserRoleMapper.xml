@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blb.ssm.mapper.UserRoleMapper">
+
+    <!--  void deleteById(String userId);-->
+    <delete id="deleteById">
+
+        delete from t_user_role  where user_id = #{userId}
+
+    </delete>
+
+
+    <!-- void deleteByIds(List<String> ids);-->
+    <delete id="deleteByIds">
+
+        delete from t_user_role  where user_id in
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+
+    </delete>
+
+
+
+</mapper>
